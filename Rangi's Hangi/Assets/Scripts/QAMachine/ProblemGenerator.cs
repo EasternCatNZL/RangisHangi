@@ -23,7 +23,7 @@ public class ProblemGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        GenerateProblem();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +34,12 @@ public class ProblemGenerator : MonoBehaviour {
             GenerateProblem();
         }
 	}
+
+    public void NewProblem()
+    {
+        ClearProblem();
+        GenerateProblem();
+    }
 
     //generate problem and answer
     void GenerateProblem()
@@ -81,6 +87,7 @@ public class ProblemGenerator : MonoBehaviour {
             GameObject solution = Instantiate(possibleSolutionList[i].gameObject, solutionSpawnPoints[i].position, Quaternion.identity);
             solution.GetComponent<AnswerObject>().SetMovable(true);
             solution.GetComponent<AnswerObject>().SetSprite();
+            solution.GetComponent<AnswerObject>().isAnswer = true;
             solution.transform.SetParent(stuffHolder);
         }
         GameObject answerObj = Instantiate(answer.gameObject, answerSpawnPoint.position, Quaternion.identity);

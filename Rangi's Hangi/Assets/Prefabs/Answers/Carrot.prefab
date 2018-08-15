@@ -21,10 +21,11 @@ GameObject:
   - component: {fileID: 4431345592210732}
   - component: {fileID: 114138491881117344}
   - component: {fileID: 212434066419824924}
-  - component: {fileID: 61864051791878716}
-  m_Layer: 0
+  - component: {fileID: 54978223017192984}
+  - component: {fileID: 65868506098500534}
+  m_Layer: 8
   m_Name: Carrot
-  m_TagString: Answer
+  m_TagString: Solution
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,31 +43,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61864051791878716
-BoxCollider2D:
+--- !u!54 &54978223017192984
+Rigidbody:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1663533394001848}
-  m_Enabled: 1
-  m_Density: 1
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65868506098500534
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1663533394001848}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114138491881117344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,15 +83,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMovable: 1
   isFollowing: 0
-  myTag: Answer
+  myRigid: {fileID: 0}
+  moveBackTime: 1
   spriteRend: {fileID: 212434066419824924}
   details:
     key: 3
     name: Carrot
     sprite: {fileID: 21300000, guid: 673a714217c8e8d4da0342bdf869cd8d, type: 3}
-  canBeMoved: 0
+  myTag: Answer
   isAnswer: 0
+  startPos: {x: 0, y: 0, z: 0}
   currentLink: {fileID: 0}
+  problemGenerator: {fileID: 0}
 --- !u!212 &212434066419824924
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -21,7 +21,7 @@ public class TouchControl : MonoBehaviour {
 	void Update () {
         //TouchAndRelease();
         //PickUpMovable();
-        TouchHandling();
+        //TouchHandling();
 	}
 
     /*
@@ -47,10 +47,11 @@ public class TouchControl : MonoBehaviour {
     }
     */
 
+        /*
     //touch handling
     private void TouchHandling()
     {
-        foreach(Touch touch in Input.touches)
+        foreach (Touch touch in Input.touches)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.rawPosition);
             touchPos.z = 0;
@@ -63,7 +64,7 @@ public class TouchControl : MonoBehaviour {
                     }
                     break;
                 case TouchPhase.Moved:
-                    if(heldFinger == touch.fingerId)
+                    if (heldFinger == touch.fingerId)
                     {
                         MovePickedupObject(touch);
                     }
@@ -80,6 +81,7 @@ public class TouchControl : MonoBehaviour {
             }
         }
     }
+    */
 
     void PickUpMovable(Touch touch)
     {

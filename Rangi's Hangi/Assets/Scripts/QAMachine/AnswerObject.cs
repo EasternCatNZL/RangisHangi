@@ -12,26 +12,32 @@ public class AnswerObject : TouchMovable {
         public Sprite sprite;
     }
 
-    [Header("Tags")]
-    public string myTag = "Answer";
+    public float moveBackTime = 1.0f;
 
     public SpriteRenderer spriteRend;
     public AnswerDetails details;
 
+    [Header("Tags")]
+    public string myTag = "Answer";
+
     //set private once tested
-    public bool canBeMoved = false;
+    //public bool canBeMoved = false;
     public bool isAnswer = false;
+    public Vector3 startPos = Vector3.zero;
 
     public AnswerObject currentLink;
+    public ProblemGenerator problemGenerator;
 
     // Use this for initialization
     void Start () {
         gameObject.tag = myTag;
-	}
+        myRigid = GetComponent<Rigidbody>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        TouchInputHandling(GetComponent<Collider2D>());
+        //TouchInputHandling(GetComponent<Collider2D>());
+        MouseInputHandling(GetComponent<Collider>());
 	}
 
     public int GetDetailsKey()
@@ -54,48 +60,95 @@ public class AnswerObject : TouchMovable {
         isMovable = movable;
     }
 
-    //checks to see if problem is above answer, otherwise move back to original pos
-    public override void DoReleaseLogic()
-    {
-        if (!isAnswer)
+    /*
+    public override void MouseInputHandling(Collider collider){
+        if (Input.GetMouseButtonDown(0) && !mouseDown)
         {
-            if (currentLink)
+            print("Mouse pressed");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayHit;
+            if (Physics.Raycast(ray, out rayHit))
             {
-                if (currentLink.GetComponent<AnswerObject>().isAnswer)
+                print("Ray shot");
+                if (rayHit.collider == collider)
                 {
-                    if (details.key == currentLink.GetComponent<AnswerObject>().details.key)
+                    print("Hit " + gameObject.name);
+                    if (!isFollowing && isMovable)
                     {
-                        //is right
-                    }
-                    else
-                    {
-                        //is wrong
-                    }
-                    //next problem
-                    if (GetComponentInParent<ProblemGenerator>())
-                    {
-                        GetComponentInParent<ProblemGenerator>().NewProblem();
+                        print("Doing things");
+                        isFollowing = true;
+                        Vector2 touchPos = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                        myRigid.MovePosition(touchPos);
                     }
                 }
             }
+
+            //if(collider == Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition))){
+            //    if (!isFollowing && isMovable)
+            //    {
+            //        isFollowing = true;
+            //    }
+            //}
+        }
+        else if (Input.GetMouseButton(0) && mouseDown && isFollowing)
+        {
+            Vector2 touchPos = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+            myRigid.MovePosition(touchPos);
+        }
+        else if (Input.GetMouseButtonUp(0) && mouseDown && isFollowing)
+        {
+            isFollowing = false;
+            mouseDown = false;
+            DoReleaseLogic();
         }
     }
+    */
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    //checks to see if problem is above answer, otherwise move back to original pos
+    public override void DoReleaseLogic()
+    {
+        problemGenerator.ProcessProblem();
+        //will get wiped if correct, so try to tween back here
+        transform.DOMove(startPos, moveBackTime);
+    }
+
+    /*
+    private void OnCollisionEnter(Collision collision)
     {
         //check if other is also answer object only
         if (collision.gameObject.GetComponent<AnswerObject>())
         {
             currentLink = collision.gameObject.GetComponent<AnswerObject>();
+            Debug.Log("Bruh");
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit(Collision collision)
     {
         //check if other is also answer object only
         if (collision.gameObject.GetComponent<AnswerObject>())
         {
             currentLink = null;
+        }
+    }
+    */
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        //check if other is also answer object only
+        if (collision.gameObject.GetComponent<AnswerObject>())
+        {
+            currentLink = collision.gameObject.GetComponent<AnswerObject>();
+            Debug.Log("Bruh");
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        //check if other is also answer object only
+        if (collision.gameObject.GetComponent<AnswerObject>())
+        {
+            currentLink = collision.gameObject.GetComponent<AnswerObject>();
         }
     }
 }

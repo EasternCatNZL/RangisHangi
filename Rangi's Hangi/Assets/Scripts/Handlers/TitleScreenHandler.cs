@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TitleScreenHandler : MonoBehaviour {
@@ -14,12 +15,21 @@ public class TitleScreenHandler : MonoBehaviour {
         SOCIALMENU
     }
 
+    [Header("Scene stuff")]
     public int gameSceneNum = 1;
 
+    [Header("Menus")]
     public GameObject homeMenuStuff;
     public GameObject optionMenuStuff;
     public GameObject quitMenuStuff;
     public GameObject socialMenuStuff;
+
+    [Header("Start screen text thing")]
+    public int fadeDirection = 1;
+    public float currentAlpha = 0;
+    public float fadeSpeed = 10.0f;
+
+    public Text startText;
 
     //bool homeMenuOpen = false;
     //bool optionsMenuOpen = false;
@@ -35,7 +45,8 @@ public class TitleScreenHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        TextFade();
+        InputCheck();
 	}
 
     private void InputCheck()
@@ -47,6 +58,7 @@ public class TitleScreenHandler : MonoBehaviour {
                 switch (Input.GetTouch(0).phase)
                 {
                     case TouchPhase.Began:
+                        OpenHomeMenu();
                         break;
                     default:
                         break;
@@ -54,11 +66,29 @@ public class TitleScreenHandler : MonoBehaviour {
             }
         }
         
-
         //android back button <- dont know about ios
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            BackKeyLogic();
+        }
+    }
 
+    void TextFade()
+    {
+        if (state == currentState.NOMENU)
+        {
+            currentAlpha += (fadeSpeed * fadeDirection) * Time.deltaTime;
+            if (currentAlpha >= 1.0f)
+            {
+                fadeDirection = -1;
+                currentAlpha = 1.0f;
+            }
+            else if(currentAlpha <= 0.0f)
+            {
+                fadeDirection = 1;
+                currentAlpha = 0.0f;
+            }
+            startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, currentAlpha);
         }
     }
 
@@ -74,7 +104,7 @@ public class TitleScreenHandler : MonoBehaviour {
                 CloseOptionMenu();
                 break;
             case currentState.SOCIALMENU:
-                CloseOptionMenu();
+                CloseSocialMenu();
                 break;
             case currentState.QUITMENU:
                 CloseQuitMenu();
@@ -85,21 +115,35 @@ public class TitleScreenHandler : MonoBehaviour {
         }
     }
 
+    public void OpenHomeMenu()
+    {
+        startText.gameObject.SetActive(false);
+        homeMenuStuff.SetActive(true);
+        state = currentState.HOMEMENU;
+    }
+
     //open quit menu on top of home
-    void OpenQuitMenu()
+    public void OpenQuitMenu()
     {
         quitMenuStuff.SetActive(true);
         state = currentState.QUITMENU;
     }
 
-    void CloseOptionMenu()
+    public void CloseOptionMenu()
     {
         optionMenuStuff.SetActive(false);
         homeMenuStuff.SetActive(true);
         state = currentState.HOMEMENU;
     }
 
-    void CloseQuitMenu()
+    public void CloseSocialMenu()
+    {
+        socialMenuStuff.SetActive(false);
+        homeMenuStuff.SetActive(true);
+        state = currentState.HOMEMENU;
+    }
+
+    public void CloseQuitMenu()
     {
         quitMenuStuff.SetActive(false);
         if (homeMenuStuff.activeInHierarchy)
@@ -113,22 +157,27 @@ public class TitleScreenHandler : MonoBehaviour {
     }
 
     //button logic
-    void GoToGame()
+    public void GoToGame()
     {
         SceneManager.LoadScene(gameSceneNum);
     }
 
-    void OpenOptionMenu()
+    public void OpenOptionMenu()
     {
         optionMenuStuff.SetActive(true);
         homeMenuStuff.SetActive(false);
         state = currentState.OPTIONSMENU;
     }
 
-    void OpenSocialMenu()
+    public void OpenSocialMenu()
     {
         socialMenuStuff.SetActive(true);
         homeMenuStuff.SetActive(false);
         state = currentState.SOCIALMENU;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

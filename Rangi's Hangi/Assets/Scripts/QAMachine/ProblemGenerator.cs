@@ -25,7 +25,8 @@ public class ProblemGenerator : MonoBehaviour {
     //change to private after testing
     public int score = 0;
 
-    public AnswerObject answer; 
+    public AnswerObject answer;
+    public GameInstanceHandler gameInstance;
 
 	// Use this for initialization
 	void Start () {
@@ -138,11 +139,9 @@ public class ProblemGenerator : MonoBehaviour {
             {
                 //is wrong
             }
+
             //next problem
-            if (GetComponentInParent<ProblemGenerator>())
-            {
-                GetComponentInParent<ProblemGenerator>().NewProblem();
-            }
+            NewProblem();
         }
     }
 

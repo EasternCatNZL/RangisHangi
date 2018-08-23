@@ -11,12 +11,25 @@ public class Timer : MonoBehaviour {
     [Header("UI stuff")]
     public Text timerText;
 
+    [Header("Script refs")]
+    public LevelHandler level;
+    public GameInstanceHandler gameInstance;
+    public RoundEndHandler endHandle;
+
+    [Header("Tags")]
+    public string handlerTag = "Handler";
+
+    [HideInInspector]
+    public bool isReady = false;
+
     bool isActive = false;
     float timeLeft = 0.0f;
     float timeTimerStarted = 0.0f;
 
 	// Use this for initialization
 	void Start () {
+        gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
+        level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
         StartTimer();
 	}
 	
@@ -29,6 +42,16 @@ public class Timer : MonoBehaviour {
         
 	}
 
+    void OnEnable()
+    {
+        GameInstanceHandler.GameStartEvent += RoundStartPreps;
+    }
+
+    private void OnDisable()
+    {
+        GameInstanceHandler.GameStartEvent -= RoundStartPreps;
+    }
+
     public void StartTimer()
     {
         timeLeft = totalTime;
@@ -38,10 +61,24 @@ public class Timer : MonoBehaviour {
 
     public void StopTimer()
     {
-        timeLeft = 0.0f;
+        //timeLeft = 0.0f;
         isActive = false;
         //anything else that needs to happen when timer stops
 
+    }
+
+    void RoundStartPreps()
+    {
+        if (!level)
+        {
+            level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+        }
+        if (!gameInstance)
+        {
+            gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
+        }
+        totalTime = level.timeLimitCurrentRound;
+        isReady = true;
     }
 
     void ClockTick()
@@ -50,6 +87,7 @@ public class Timer : MonoBehaviour {
         if(timeLeft <= 0)
         {
             StopTimer();
+            endHandle.EndRound();
         }
         PresentTime();
     }

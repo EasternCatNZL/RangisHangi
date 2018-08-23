@@ -10,10 +10,11 @@ public class ProblemGenerator : MonoBehaviour {
     public Transform stuffHolder; //For parenting use, stop heirachy getting flooded
     public Transform answerSpawnPoint;
     public Transform[] solutionSpawnPoints = new Transform[2];
-    public Text scoreText;
+    //public Text scoreText;
 
     [Header("Tags")]
     public string answerTag = "Answer";
+    public string handlerTag = "Handler";
     //public string solutionTag = "Solution";
 
     [Header("Lists")]
@@ -27,11 +28,17 @@ public class ProblemGenerator : MonoBehaviour {
 
     public AnswerObject answer;
     public GameInstanceHandler gameInstance;
+    public LevelHandler level;
+    public RoundEndHandler endHandle;
+
+    bool isReady = false;
 
 	// Use this for initialization
 	void Start () {
-        GenerateProblem();
-	}
+        //GenerateProblem();
+        gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
+        level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -41,6 +48,29 @@ public class ProblemGenerator : MonoBehaviour {
             GenerateProblem();
         }
 	}
+
+    private void OnEnable()
+    {
+        GameInstanceHandler.GameStartEvent += RoundStartPreps;
+    }
+
+    private void OnDisable()
+    {
+        GameInstanceHandler.GameStartEvent -= RoundStartPreps;
+    }
+
+    void RoundStartPreps()
+    {
+        if (!level)
+        {
+            level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+        }
+        if (!gameInstance)
+        {
+            gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
+        }
+        isReady = true;
+    }
 
     public void NewProblem()
     {
@@ -132,16 +162,24 @@ public class ProblemGenerator : MonoBehaviour {
             if (answer.details.key == answer.currentLink.GetComponent<AnswerObject>().details.key)
             {
                 //is right
-                score += correctAnswerScore;
-                scoreText.text = "Score: " + score;
+                //score += correctAnswerScore;
+                //scoreText.text = "Score: " + score;
+                level.currentCorrect++;
             }
             else
             {
                 //is wrong
             }
-
-            //next problem
-            NewProblem();
+            level.currentQuestion++;
+            if(level.currentQuestion < level.numQuestionsCurrentRound)
+            {
+                //next problem
+                NewProblem();
+            }
+            else
+            {
+                endHandle.EndRound();
+            }
         }
     }
 

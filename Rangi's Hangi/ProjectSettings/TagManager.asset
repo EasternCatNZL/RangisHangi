@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Answer
+  - Handler
+  - Solution
+  - QAMachine
+  - RoundManager
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,8 @@ public class TitleScreenHandler : MonoBehaviour {
         HOMEMENU,
         OPTIONSMENU,
         QUITMENU,
-        SOCIALMENU
+        SOCIALMENU,
+        STAGEMENU
     }
 
     [Header("Scene stuff")]
@@ -23,6 +24,7 @@ public class TitleScreenHandler : MonoBehaviour {
     public GameObject optionMenuStuff;
     public GameObject quitMenuStuff;
     public GameObject socialMenuStuff;
+    public GameObject stageMenuStuff;
 
     [Header("Start screen text thing")]
     public int fadeDirection = 1;
@@ -109,6 +111,9 @@ public class TitleScreenHandler : MonoBehaviour {
             case currentState.QUITMENU:
                 CloseQuitMenu();
                 break;
+            case currentState.STAGEMENU:
+                CloseStageMenu();
+                break;
             default:
                 OpenQuitMenu();
                 break;
@@ -156,6 +161,13 @@ public class TitleScreenHandler : MonoBehaviour {
         }
     }
 
+    public void CloseStageMenu()
+    {
+        stageMenuStuff.SetActive(false);
+        homeMenuStuff.SetActive(true);
+        state = currentState.HOMEMENU;
+    }
+
     //button logic
     public void GoToGame()
     {
@@ -174,6 +186,13 @@ public class TitleScreenHandler : MonoBehaviour {
         socialMenuStuff.SetActive(true);
         homeMenuStuff.SetActive(false);
         state = currentState.SOCIALMENU;
+    }
+
+    public void OpenStageMenu()
+    {
+        homeMenuStuff.SetActive(false);
+        stageMenuStuff.SetActive(true);
+        state = currentState.STAGEMENU;
     }
 
     public void QuitGame()

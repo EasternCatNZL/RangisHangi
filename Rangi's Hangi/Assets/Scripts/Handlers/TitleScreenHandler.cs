@@ -38,7 +38,7 @@ public class TitleScreenHandler : MonoBehaviour {
     //bool quitMenuOpen = false;
     //bool socialMenuOpen = false;
 
-    currentState state = currentState.NOMENU;
+    public currentState state = currentState.NOMENU;
 
 	// Use this for initialization
 	void Start () {
@@ -63,6 +63,7 @@ public class TitleScreenHandler : MonoBehaviour {
                         OpenHomeMenu();
                         break;
                     default:
+                        OpenHomeMenu();
                         break;
                 }
             }

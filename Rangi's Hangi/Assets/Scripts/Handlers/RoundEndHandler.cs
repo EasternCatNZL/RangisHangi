@@ -10,7 +10,6 @@ public class RoundEndHandler : MonoBehaviour {
     public ProblemGenerator problemGenerator;
     public Timer timer;
     public LevelHandler level;
-    public GameInstanceHandler game;
 
     [Header("UI stuff")]
     public GameObject roundEndStuff;
@@ -21,6 +20,7 @@ public class RoundEndHandler : MonoBehaviour {
 
     [Header("Scene stuff")]
     public int homeScene = 0;
+    public int gameScene = 1;
 
     [Header("Tags")]
     public string handlerTag = "Handler";
@@ -30,10 +30,6 @@ public class RoundEndHandler : MonoBehaviour {
         if (!level)
         {
             level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
-        }
-        if (!game)
-        {
-            game = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
         }
     }
 	
@@ -46,6 +42,7 @@ public class RoundEndHandler : MonoBehaviour {
     {
         timer.StopTimer();
         //go to round end ui
+        gameUIStuff.SetActive(false);
         roundEndStuff.SetActive(true);
         finalCorrectText.text = "Final Score: \n" + level.currentCorrect + "/" + level.numQuestionsCurrentRound;
     }
@@ -58,7 +55,7 @@ public class RoundEndHandler : MonoBehaviour {
 
     public void RedoRound()
     {
-        game.RedoRound();
+        SceneManager.LoadScene(gameScene);
     }
 
     public void DifferentLevel()

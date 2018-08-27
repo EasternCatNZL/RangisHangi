@@ -27,7 +27,7 @@ public class ProblemGenerator : MonoBehaviour {
     public int score = 0;
 
     public AnswerObject answer;
-    public GameInstanceHandler gameInstance;
+    //public GameInstanceHandler gameInstance;
     public LevelHandler level;
     public RoundEndHandler endHandle;
 
@@ -36,8 +36,13 @@ public class ProblemGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //GenerateProblem();
-        gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
-        level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+        //gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
+        //level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+        if (!level)
+        {
+            level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+        }
+        //NewProblem();
     }
 	
 	// Update is called once per frame
@@ -49,15 +54,15 @@ public class ProblemGenerator : MonoBehaviour {
         }
 	}
 
-    private void OnEnable()
-    {
-        GameInstanceHandler.GameStartEvent += RoundStartPreps;
-    }
+    //private void OnEnable()
+    //{
+    //    GameInstanceHandler.GameStartEvent += RoundStartPreps;
+    //}
 
-    private void OnDisable()
-    {
-        GameInstanceHandler.GameStartEvent -= RoundStartPreps;
-    }
+    //private void OnDisable()
+    //{
+    //    GameInstanceHandler.GameStartEvent -= RoundStartPreps;
+    //}
 
     void RoundStartPreps()
     {
@@ -65,11 +70,11 @@ public class ProblemGenerator : MonoBehaviour {
         {
             level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
         }
-        if (!gameInstance)
-        {
-            gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
-        }
-        isReady = true;
+        //if (!gameInstance)
+        //{
+        //    gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
+        //}
+        //isReady = true;
     }
 
     public void NewProblem()
@@ -79,7 +84,7 @@ public class ProblemGenerator : MonoBehaviour {
     }
 
     //generate problem and answer
-    void GenerateProblem()
+    public void GenerateProblem()
     {
         //get random answer
         int rand = Random.Range(0, answerList.Count - 1);
@@ -187,10 +192,18 @@ public class ProblemGenerator : MonoBehaviour {
     {
         possibleSolutionList.Clear();
         GameObject[] answerObjects = GameObject.FindGameObjectsWithTag(answerTag);
-        for(int i = 0; i < answerObjects.Length; i++)
+        if(answerObjects.Length > 0)
         {
-            Destroy(answerObjects[i]);
+            for (int i = 0; i < answerObjects.Length; i++)
+            {
+                Destroy(answerObjects[i]);
+            }
         }
-        Destroy(answer.gameObject);
+
+        if (answer.gameObject)
+        {
+            Destroy(answer.gameObject);
+        }
+        
     }
 }

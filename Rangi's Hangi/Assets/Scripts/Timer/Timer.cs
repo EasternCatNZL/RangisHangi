@@ -13,7 +13,6 @@ public class Timer : MonoBehaviour {
 
     [Header("Script refs")]
     public LevelHandler level;
-    public GameInstanceHandler gameInstance;
     public RoundEndHandler endHandle;
 
     [Header("Tags")]
@@ -28,9 +27,8 @@ public class Timer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
         level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
-        StartTimer();
+        //StartTimer();
 	}
 	
 	// Update is called once per frame
@@ -39,18 +37,7 @@ public class Timer : MonoBehaviour {
         {
             ClockTick();
         }
-        
 	}
-
-    void OnEnable()
-    {
-        GameInstanceHandler.GameStartEvent += RoundStartPreps;
-    }
-
-    private void OnDisable()
-    {
-        GameInstanceHandler.GameStartEvent -= RoundStartPreps;
-    }
 
     public void StartTimer()
     {
@@ -67,18 +54,13 @@ public class Timer : MonoBehaviour {
 
     }
 
-    void RoundStartPreps()
+    public void RoundStartPreps()
     {
         if (!level)
         {
             level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
         }
-        if (!gameInstance)
-        {
-            gameInstance = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<GameInstanceHandler>();
-        }
         totalTime = level.timeLimitCurrentRound;
-        isReady = true;
     }
 
     void ClockTick()

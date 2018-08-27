@@ -67,6 +67,10 @@ public class TitleScreenHandler : MonoBehaviour {
                         break;
                 }
             }
+            if (Input.GetMouseButtonDown(0))
+            {
+                OpenHomeMenu();
+            }
         }
         
         //android back button <- dont know about ios
@@ -169,11 +173,11 @@ public class TitleScreenHandler : MonoBehaviour {
         state = currentState.HOMEMENU;
     }
 
-    //button logic
-    public void GoToGame()
-    {
-        SceneManager.LoadScene(gameSceneNum);
-    }
+    ////button logic
+    //public void GoToGame()
+    //{
+    //    SceneManager.LoadScene(gameSceneNum);
+    //}
 
     public void OpenOptionMenu()
     {

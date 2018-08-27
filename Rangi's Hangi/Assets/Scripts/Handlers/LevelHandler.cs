@@ -8,9 +8,6 @@ public class LevelHandler : MonoBehaviour {
     [Header("Scene stuff")]
     public int gameScene = 1;
 
-    [Header("Script refs")]
-    public GameInstanceHandler gameInstance;
-
     [Header("Details")]
     public int numQuestionsCurrentRound = 0;
     public int baseLineCurrentRound = 0;
@@ -32,17 +29,7 @@ public class LevelHandler : MonoBehaviour {
 		
 	}
 
-    private void OnEnable()
-    {
-        GameInstanceHandler.GameStartEvent += RoundStartPreps;
-    }
-
-    private void OnDisable()
-    {
-        GameInstanceHandler.GameStartEvent -= RoundStartPreps;
-    }
-
-    void RoundStartPreps()
+    public void RoundStartPreps()
     {
         currentQuestion = 1;
         currentCorrect = 0;
@@ -54,11 +41,6 @@ public class LevelHandler : MonoBehaviour {
         numQuestionsCurrentRound = numQ;
         baseLineCurrentRound = baseL;
         timeLimitCurrentRound = timeL;
-
-        //if in home scene, load to game scene
-        //if(gameInstance.currentScene == GameInstanceHandler.CurrentScene.HOMESCENE)
-        //{
         SceneManager.LoadScene(gameScene);
-        //}
     }
 }

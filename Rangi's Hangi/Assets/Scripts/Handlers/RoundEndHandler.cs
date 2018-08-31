@@ -41,6 +41,7 @@ public class RoundEndHandler : MonoBehaviour {
     public void EndRound()
     {
         timer.StopTimer();
+        problemGenerator.ClearProblem();
         //go to round end ui
         gameUIStuff.SetActive(false);
         roundEndStuff.SetActive(true);

@@ -95,11 +95,21 @@ public class ProblemGenerator : MonoBehaviour {
         int solutionsProvided = 1;
         while (solutionsProvided < numPossibleSolutions)
         {
-            //get random in possible solutions, and then check if already existing
-            rand = Random.Range(0, answerList.Count - 1);
-            if (!possibleSolutionList.Contains(answerList[rand]))
+            rand = Random.Range(0, 2);
+            List<AnswerObject> listRef;
+            if(rand == 0)
             {
-                possibleSolutionList.Add(answerList[rand]);
+                listRef = answerList;
+            }
+            else
+            {
+                listRef = wrongAnswerList;
+            }
+            //get random in possible solutions, and then check if already existing
+            rand = Random.Range(0, listRef.Count - 1);
+            if (!possibleSolutionList.Contains(listRef[rand]))
+            {
+                possibleSolutionList.Add(listRef[rand]);
                 solutionsProvided++;
             }
         }
@@ -136,16 +146,18 @@ public class ProblemGenerator : MonoBehaviour {
         //answerObj.GetComponent<AnswerObject>().isMovable = false;
     }
 
+    //These are the choices
     void SetupSolutionObject(AnswerObject solution, Vector3 startPos)
     {
         solution.SetMovable(true);
-        solution.SetSprite();
+        solution.SetTextMesh();
         solution.isAnswer = true;
         solution.problemGenerator = this;
         solution.startPos = startPos;
         solution.transform.SetParent(stuffHolder);
     }
 
+    //This is for the answer that the choices go to
     void SetupAnswerObject(AnswerObject answer)
     {
         answer.SetSprite();
@@ -175,11 +187,12 @@ public class ProblemGenerator : MonoBehaviour {
             {
                 //is wrong
             }
-            level.currentQuestion++;
+            
             if(level.currentQuestion < level.numQuestionsCurrentRound)
             {
                 //next problem
                 NewProblem();
+                level.currentQuestion++;
             }
             else
             {
@@ -188,7 +201,7 @@ public class ProblemGenerator : MonoBehaviour {
         }
     }
 
-    void ClearProblem()
+    public void ClearProblem()
     {
         possibleSolutionList.Clear();
         GameObject[] answerObjects = GameObject.FindGameObjectsWithTag(answerTag);

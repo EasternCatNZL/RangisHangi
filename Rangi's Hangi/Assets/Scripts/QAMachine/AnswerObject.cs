@@ -9,12 +9,14 @@ public class AnswerObject : TouchMovable {
     public struct AnswerDetails{
         public int key;
         public string name;
+        public string maoriName;
         public Sprite sprite;
     }
 
     public float moveBackTime = 1.0f;
 
     public SpriteRenderer spriteRend;
+    public TextMesh textMesh;
     public AnswerDetails details;
 
     [Header("Tags")]
@@ -52,7 +54,16 @@ public class AnswerObject : TouchMovable {
 
     public void SetSprite()
     {
+        spriteRend = gameObject.AddComponent<SpriteRenderer>();
         spriteRend.sprite = details.sprite;
+    }
+
+    public void SetTextMesh()
+    {
+        textMesh = gameObject.AddComponent<TextMesh>();
+        textMesh.text = details.maoriName;
+        textMesh.characterSize = 0.5f;
+        textMesh.anchor = TextAnchor.MiddleCenter;
     }
 
     public void SetMovable(bool movable)

@@ -9,6 +9,7 @@ TagManager:
   - Solution
   - QAMachine
   - RoundManager
+  - Hangi
   layers:
   - Default
   - TransparentFX

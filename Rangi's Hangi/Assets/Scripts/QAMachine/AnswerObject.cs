@@ -21,6 +21,7 @@ public class AnswerObject : TouchMovable {
 
     [Header("Tags")]
     public string myTag = "Answer";
+    public string hangiTag = "Hangi";
 
     //set private once tested
     //public bool canBeMoved = false;
@@ -29,6 +30,7 @@ public class AnswerObject : TouchMovable {
 
     public AnswerObject currentLink;
     public ProblemGenerator problemGenerator;
+    public Hangi hangi;
 
     // Use this for initialization
     void Start () {
@@ -118,8 +120,15 @@ public class AnswerObject : TouchMovable {
     //checks to see if problem is above answer, otherwise move back to original pos
     public override void DoReleaseLogic()
     {
-        problemGenerator.ProcessProblem();
-        //will get wiped if correct, so try to tween back here
+        if (hangi)
+        {
+            hangi.CollectItem(this);
+        }
+        else
+        {
+            problemGenerator.ProcessProblem();            
+        }
+        //will get wiped if processed, so try to tween back here
         transform.DOMove(startPos, moveBackTime);
     }
 
@@ -152,6 +161,10 @@ public class AnswerObject : TouchMovable {
             currentLink = collision.gameObject.GetComponent<AnswerObject>();
             Debug.Log("Bruh");
         }
+        else if (collision.gameObject.GetComponent<Hangi>())
+        {
+            hangi = collision.gameObject.GetComponent<Hangi>();
+        }
     }
 
     private void OnTriggerExit(Collider collision)
@@ -159,7 +172,11 @@ public class AnswerObject : TouchMovable {
         //check if other is also answer object only
         if (collision.gameObject.GetComponent<AnswerObject>())
         {
-            currentLink = collision.gameObject.GetComponent<AnswerObject>();
+            currentLink = null;
+        }
+        else if (collision.gameObject.GetComponent<Hangi>())
+        {
+            hangi = null;
         }
     }
 }

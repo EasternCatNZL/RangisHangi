@@ -40,13 +40,13 @@ public class ProblemCreator : MonoBehaviour {
 
     public void GenerateProblems()
     {
-        for (int i = 0; i < hangi.contents.Length; i++)
+        for (int i = 0; i < hangi.foodContents.Length; i++)
         {
             //get random answer
             int rand = Random.Range(0, answerList.Count - 1);
             //set answer and add answer to possible solution list
-            hangi.contents[i].item = answerList[rand];
-            hangi.contents[i].possibleSolutions.Add(answerList[rand]);
+            hangi.foodContents[i].itemWanted = answerList[rand];
+            hangi.foodContents[i].possibleSolutions.Add(answerList[rand]);
 
             //fill in other possible solutions with other things
             int solutionsProvided = 1;
@@ -64,15 +64,15 @@ public class ProblemCreator : MonoBehaviour {
                 }
                 //get random in possible solutions, and then check if already existing
                 rand = Random.Range(0, listRef.Count - 1);
-                if (!hangi.contents[i].possibleSolutions.Contains(listRef[rand]))
+                if (!hangi.foodContents[i].possibleSolutions.Contains(listRef[rand]))
                 {
-                    hangi.contents[i].possibleSolutions.Add(listRef[rand]);
+                    hangi.foodContents[i].possibleSolutions.Add(listRef[rand]);
                     solutionsProvided++;
                 }
             }
 
             //shuffle possible solutions
-            ShuffleSolutions(hangi.contents[i].possibleSolutions);
+            ShuffleSolutions(hangi.foodContents[i].possibleSolutions);
         }
     }
 

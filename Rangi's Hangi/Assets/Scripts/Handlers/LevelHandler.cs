@@ -7,6 +7,7 @@ public class LevelHandler : MonoBehaviour {
 
     [Header("Scene stuff")]
     public int gameScene = 1;
+    public int hangiScene = 2;
 
     [Header("Details")]
     public int numQuestionsCurrentRound = 0;
@@ -42,5 +43,11 @@ public class LevelHandler : MonoBehaviour {
         baseLineCurrentRound = baseL;
         timeLimitCurrentRound = timeL;
         SceneManager.LoadScene(gameScene);
+    }
+
+    public void ReceiveHangiDetails(int numQ)
+    {
+        numQuestionsCurrentRound = numQ;
+        SceneManager.LoadScene(hangiScene);
     }
 }

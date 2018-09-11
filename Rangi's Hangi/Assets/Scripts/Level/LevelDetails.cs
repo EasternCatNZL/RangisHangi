@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelDetails : MonoBehaviour {
+public class LevelDetails : HangiDetails {
 
-    public int numQuestions = 3;
+    //public int numQuestions = 3;
     public int baseLine = 1; // <- fraction per grade
     public float timeLimit = 10.0f;
 
-    [Header("Tags")]
-    public string levelHTag = "Handler";
+    //[Header("Tags")]
+    //public string levelHTag = "Handler";
 
-    public LevelHandler level;
+    //public LevelHandler level;
 
     // Use this for initialization
     void Start () {

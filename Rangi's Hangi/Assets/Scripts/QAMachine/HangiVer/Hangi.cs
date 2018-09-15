@@ -8,13 +8,6 @@ public class Hangi : MonoBehaviour {
     [Header("Round stuff")]
     public int numFoodItems = 4;
 
-    [Header("Positioning transforms")]
-    public Transform woodPos;
-    public Transform stonePos;
-    public Transform firePos;
-    public Transform coverPos;
-    public Transform[] possibleFoodPos = new Transform[0];
-
     public enum Phase
     {
         StackWood,
@@ -39,6 +32,7 @@ public class Hangi : MonoBehaviour {
         public string maori;
     }
 
+    [Header("Hangi contents")]
     public Contents wood;
     public Contents stone;
     public Contents fire;
@@ -52,14 +46,32 @@ public class Hangi : MonoBehaviour {
     public TextMessage placeFoodMessage;
     public TextMessage placeCoverMessage;
 
-    [Header("UI components")]
+    [Header("UI game components")]
     public Text instructionsText;
     public Image nextItemImage;
+
+    [Header("UI results components")]
+    public GameObject resultsPanel;
+    public Image woodWanted;
+    public Image woodGiven;
+    public Image stoneWanted;
+    public Image stoneGiven;
+    public Image fireWanted;
+    public Image fireGiven;
+    public Image food1Wanted;
+    public Image food1Given;
+    public Image food2Wanted;
+    public Image food2Given;
+    public Image food3Wanted;
+    public Image food3Given;
+    public Image food4Wanted;
+    public Image food4Given;
+    public Image coverWanted;
+    public Image coverGiven;
 
     [Header("Script refs")]
     public LevelHandler level;
     public ProblemCreator creator;
-    public ProblemResolver resolver;
 
     [Header("Tags")]
     public string handlerTag = "Handler";
@@ -74,6 +86,7 @@ public class Hangi : MonoBehaviour {
         {
             level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
         }
+        SetupLevel();
     }
 	
 	// Update is called once per frame
@@ -84,40 +97,52 @@ public class Hangi : MonoBehaviour {
     //set up the level
     public void SetupLevel()
     {
+        resultsPanel.SetActive(false);
         numFoodItems = level.numQuestionsCurrentRound;
         foodContents = new Contents[numFoodItems];
         creator.GenerateProblems();
+
+        //begin
+        StackWoodPrompt();
     }
 
     public void CollectItem(AnswerObject item)
     {
+
         switch (phase)
         {
             case Phase.StackWood:
                 wood.itemGiven = item;
+                creator.ClearProblem();
                 AddStonePrompt();
                 break;
             case Phase.AddStone:
                 stone.itemGiven = item;
+                creator.ClearProblem();
                 LightFirePrompt();
                 break;
             case Phase.LightFire:
                 fire.itemGiven = item;
+                creator.ClearProblem();
+                PlaceFoodPrompt();
                 break;
             case Phase.PlaceFood:
                 foodContents[currentFoodItem].itemGiven = item;
                 currentFoodItem++;
                 if(currentFoodItem > foodContents.Length)
                 {
+                    creator.ClearProblem();
                     PlaceCoverPrompt();
                 }
                 else
                 {
+                    creator.ClearProblem();
                     PlaceFoodPrompt();
                 }
                 break;
             case Phase.PlaceCover:
                 cover.itemGiven = item;
+                creator.ClearProblem();
                 FinishRound();
                 break;
             default:
@@ -130,18 +155,22 @@ public class Hangi : MonoBehaviour {
     {
         phase = Phase.StackWood;
         instructionsText.text = stackWoodMessage.maori;
+        creator.SpawnTools();
     }
 
     void AddStonePrompt()
     {
+        
         phase = Phase.AddStone;
         instructionsText.text = addStoneMessage.maori;
+        creator.SpawnTools();
     }
 
     void LightFirePrompt()
     {
         phase = Phase.LightFire;
         instructionsText.text = lightFireMessage.maori;
+        creator.SpawnTools();
     }
 
     void PlaceFoodPrompt()
@@ -149,16 +178,38 @@ public class Hangi : MonoBehaviour {
         phase = Phase.PlaceFood;
         instructionsText.text = placeFoodMessage.maori;
         nextItemImage.sprite = foodContents[currentFoodItem].itemWanted.details.sprite;
+        creator.SpawnTools();
+        creator.SpawnChoices(currentFoodItem);
     }
 
     void PlaceCoverPrompt()
     {
         phase = Phase.PlaceCover;
         instructionsText.text = placeCoverMessage.maori;
+        creator.SpawnTools();
     }
 
     void FinishRound()
     {
+        resultsPanel.SetActive(true);
+
+        //set images
+        woodWanted.sprite = wood.itemWanted.details.sprite;
+        woodGiven.sprite = wood.itemGiven.details.sprite;
+        stoneWanted.sprite = stone.itemWanted.details.sprite;
+        stoneGiven.sprite = stone.itemGiven.details.sprite;
+        fireWanted.sprite = fire.itemWanted.details.sprite;
+        fireGiven.sprite = fire.itemGiven.details.sprite;
+
+        food1Wanted.sprite = foodContents[0].itemWanted.details.sprite;
+        food1Given.sprite = foodContents[0].itemGiven.details.sprite;
+        food2Wanted.sprite = foodContents[1].itemWanted.details.sprite;
+        food2Given.sprite = foodContents[1].itemGiven.details.sprite;
+        food3Wanted.sprite = foodContents[2].itemWanted.details.sprite;
+        food3Given.sprite = foodContents[2].itemGiven.details.sprite;
+        food4Wanted.sprite = foodContents[3].itemWanted.details.sprite;
+        food4Given.sprite = foodContents[3].itemGiven.details.sprite;
+
 
     }
 }

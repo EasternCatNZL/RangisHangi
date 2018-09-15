@@ -6,17 +6,19 @@ public class ProblemCreator : MonoBehaviour {
 
     public int numPossibleSolutions = 4;
     public Transform stuffHolder; //For parenting use, stop heirachy getting flooded
-    public Transform[] solutionSpawnPoints = new Transform[4];
+    public Transform[] foodChoicesSpawnPos = new Transform[4];
+    public Transform[] toolSpawnPos = new Transform[4];
 
     [Header("Tags")]
-    public string handlerTag = "Handler";
+    public string answerTag = "Answer";
 
     [Header("Lists")]
     //lists <- find a better way to do this
     public List<AnswerObject> answerList = new List<AnswerObject>();
     public List<AnswerObject> wrongAnswerList = new List<AnswerObject>();
+    public List<AnswerObject> toolList = new List<AnswerObject>();
 
-    public LevelHandler level;
+    //public LevelHandler level;
     public Hangi hangi;
 
 
@@ -30,13 +32,13 @@ public class ProblemCreator : MonoBehaviour {
 		
 	}
 
-    void RoundStartPreps()
-    {
-        if (!level)
-        {
-            level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
-        }
-    }
+    //void RoundStartPreps()
+    //{
+    //    if (!level)
+    //    {
+    //        level = GameObject.FindGameObjectWithTag(handlerTag).GetComponent<LevelHandler>();
+    //    }
+    //}
 
     public void GenerateProblems()
     {
@@ -87,5 +89,46 @@ public class ProblemCreator : MonoBehaviour {
             list[r] = list[i];
             list[i] = randAnswer;
         }
+    }
+
+    public void ClearProblem()
+    {
+        GameObject[] answerObjects = GameObject.FindGameObjectsWithTag(answerTag);
+        if (answerObjects.Length > 0)
+        {
+            for (int i = 0; i < answerObjects.Length; i++)
+            {
+                Destroy(answerObjects[i]);
+            }
+        }
+    }
+
+    public void SpawnTools()
+    {
+        for(int i = 0; i < toolList.Count; i++)
+        {
+            GameObject toolClone = Instantiate(toolList[i].gameObject, toolSpawnPos[i].position, Quaternion.identity);
+            toolClone.name = toolList[i].gameObject.name;
+        }
+    }
+
+    public void SpawnChoices(int currentIndex)
+    {
+        for(int i = 0; i < hangi.foodContents[currentIndex].possibleSolutions.Count; i++)
+        {
+            GameObject choiceClone = Instantiate(hangi.foodContents[currentIndex].possibleSolutions[i].gameObject, foodChoicesSpawnPos[i].position, Quaternion.identity);
+            choiceClone.name = hangi.foodContents[currentIndex].possibleSolutions[i].gameObject.name;
+            SetupSolutionObject(choiceClone.GetComponent<AnswerObject>(), foodChoicesSpawnPos[i].position);
+        }
+    }
+
+    void SetupSolutionObject(AnswerObject solution, Vector3 startPos)
+    {
+        solution.SetMovable(true);
+        solution.SetTextMesh();
+        solution.isAnswer = true;
+        //solution.problemGenerator = this;
+        solution.startPos = startPos;
+        solution.transform.SetParent(stuffHolder);
     }
 }

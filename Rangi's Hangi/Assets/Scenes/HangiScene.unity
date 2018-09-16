@@ -169,6 +169,34 @@ Transform:
   m_Father: {fileID: 679650344}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &106741459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106741460}
+  m_Layer: 0
+  m_Name: StuffHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &106741460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 106741459}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2061354016}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &135147466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1483,7 @@ GameObject:
   - component: {fileID: 1111783579}
   - component: {fileID: 1111783581}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: ResultsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2446,17 +2474,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPossibleSolutions: 4
-  stuffHolder: {fileID: 0}
+  stuffHolder: {fileID: 106741460}
   foodChoicesSpawnPos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6058874}
+  - {fileID: 198712629}
+  - {fileID: 1018785585}
+  - {fileID: 1201934268}
   toolSpawnPos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1858810785}
+  - {fileID: 1406473826}
+  - {fileID: 1483725825}
+  - {fileID: 82933513}
   answerTag: Answer
   answerList:
   - {fileID: 114692705679831474, guid: 281ccb9dad072914d9ae099862a73bd6, type: 2}
@@ -2478,7 +2506,9 @@ MonoBehaviour:
   - {fileID: 114230957249655528, guid: 0861ecce364e10447914831ba5b4c3a6, type: 2}
   - {fileID: 114386842155187606, guid: 13c432434fa24bb42878dff38111c915, type: 2}
   - {fileID: 114926814363619800, guid: 5f92e026091770f4eb470cc143c8f6b4, type: 2}
-  toolList: []
+  toolList:
+  - {fileID: 114142642072876080, guid: aa849c256275a954a9735703b391124d, type: 2}
+  - {fileID: 114040922737763614, guid: 310b2c1d219c32342bfb5f982d908dc8, type: 2}
   hangi: {fileID: 2061354015}
 --- !u!114 &2061354015
 MonoBehaviour:
@@ -2493,11 +2523,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numFoodItems: 4
   wood:
-    itemWanted: {fileID: 0}
+    itemWanted: {fileID: 114142642072876080, guid: aa849c256275a954a9735703b391124d,
+      type: 2}
     itemGiven: {fileID: 0}
     possibleSolutions: []
   stone:
-    itemWanted: {fileID: 0}
+    itemWanted: {fileID: 114040922737763614, guid: 310b2c1d219c32342bfb5f982d908dc8,
+      type: 2}
     itemGiven: {fileID: 0}
     possibleSolutions: []
   fire:
@@ -2526,23 +2558,23 @@ MonoBehaviour:
     maori: Taupokina!
   instructionsText: {fileID: 430888359}
   nextItemImage: {fileID: 0}
-  resultsPanel: {fileID: 0}
-  woodWanted: {fileID: 0}
-  woodGiven: {fileID: 0}
-  stoneWanted: {fileID: 0}
-  stoneGiven: {fileID: 0}
-  fireWanted: {fileID: 0}
-  fireGiven: {fileID: 0}
-  food1Wanted: {fileID: 0}
-  food1Given: {fileID: 0}
-  food2Wanted: {fileID: 0}
-  food2Given: {fileID: 0}
-  food3Wanted: {fileID: 0}
-  food3Given: {fileID: 0}
-  food4Wanted: {fileID: 0}
-  food4Given: {fileID: 0}
-  coverWanted: {fileID: 0}
-  coverGiven: {fileID: 0}
+  resultsPanel: {fileID: 1111783577}
+  woodWanted: {fileID: 1579427370}
+  woodGiven: {fileID: 211065117}
+  stoneWanted: {fileID: 592881430}
+  stoneGiven: {fileID: 712248519}
+  fireWanted: {fileID: 1539388543}
+  fireGiven: {fileID: 232019748}
+  food1Wanted: {fileID: 386123020}
+  food1Given: {fileID: 524148521}
+  food2Wanted: {fileID: 449413446}
+  food2Given: {fileID: 358741399}
+  food3Wanted: {fileID: 1611470711}
+  food3Given: {fileID: 697666696}
+  food4Wanted: {fileID: 2125345070}
+  food4Given: {fileID: 1596282760}
+  coverWanted: {fileID: 615362464}
+  coverGiven: {fileID: 492390067}
   level: {fileID: 0}
   creator: {fileID: 2061354014}
   handlerTag: Handler
@@ -2555,7 +2587,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 106741460}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -77,7 +77,7 @@ public class Hangi : MonoBehaviour {
     public string handlerTag = "Handler";
 
     //control vars
-    private int currentFoodItem = 1;
+    private int currentFoodItem = 0;
     private Phase phase = Phase.StackWood;
 
 	// Use this for initialization
@@ -129,7 +129,7 @@ public class Hangi : MonoBehaviour {
             case Phase.PlaceFood:
                 foodContents[currentFoodItem].itemGiven = item;
                 currentFoodItem++;
-                if(currentFoodItem > foodContents.Length)
+                if(currentFoodItem >= foodContents.Length)
                 {
                     creator.ClearProblem();
                     PlaceCoverPrompt();

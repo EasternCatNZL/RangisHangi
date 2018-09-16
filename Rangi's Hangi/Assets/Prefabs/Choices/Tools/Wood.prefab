@@ -90,9 +90,12 @@ MonoBehaviour:
     key: 19
     name: Wood
     maoriName: Rakau
-    sprite: {fileID: 21300000, guid: 26c538f8c3e5fb24aa59e35f2ed8fde5, type: 3}
+    sprite: {fileID: 21300000, guid: 3cd74e988f87cdd45957282918de8a17, type: 3}
   myTag: Answer
+  hangiTag: Hangi
+  moveBack: 1
   isAnswer: 0
   startPos: {x: 0, y: 0, z: 0}
   currentLink: {fileID: 0}
   problemGenerator: {fileID: 0}
+  hangi: {fileID: 0}

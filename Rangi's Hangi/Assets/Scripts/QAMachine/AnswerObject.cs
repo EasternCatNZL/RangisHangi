@@ -25,6 +25,7 @@ public class AnswerObject : TouchMovable {
 
     //set private once tested
     //public bool canBeMoved = false;
+    public bool moveBack = true;
     public bool isAnswer = false;
     public Vector3 startPos = Vector3.zero;
 
@@ -128,8 +129,11 @@ public class AnswerObject : TouchMovable {
         {
             problemGenerator.ProcessProblem();            
         }
-        //will get wiped if processed, so try to tween back here
-        transform.DOMove(startPos, moveBackTime);
+        if (moveBack)
+        {
+            transform.DOMove(startPos, moveBackTime);
+        }
+        
     }
 
     /*

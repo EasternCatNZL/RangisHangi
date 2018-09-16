@@ -6,6 +6,7 @@ public class ProblemCreator : MonoBehaviour {
 
     public int numPossibleSolutions = 4;
     public Transform stuffHolder; //For parenting use, stop heirachy getting flooded
+    public Transform outOfScreenHolder; //Need to hold objects to evaluate later
     public Transform[] foodChoicesSpawnPos = new Transform[4];
     public Transform[] toolSpawnPos = new Transform[4];
 
@@ -48,6 +49,7 @@ public class ProblemCreator : MonoBehaviour {
             int rand = Random.Range(0, answerList.Count - 1);
             //set answer and add answer to possible solution list
             hangi.foodContents[i].itemWanted = answerList[rand];
+            hangi.foodContents[i].possibleSolutions = new List<AnswerObject>();
             hangi.foodContents[i].possibleSolutions.Add(answerList[rand]);
 
             //fill in other possible solutions with other things
@@ -98,7 +100,10 @@ public class ProblemCreator : MonoBehaviour {
         {
             for (int i = 0; i < answerObjects.Length; i++)
             {
-                Destroy(answerObjects[i]);
+                answerObjects[i].GetComponent<AnswerObject>().moveBack = false;
+                answerObjects[i].gameObject.transform.position = outOfScreenHolder.position;
+                answerObjects[i].gameObject.transform.SetParent(outOfScreenHolder);
+                //Destroy(answerObjects[i]);
             }
         }
     }
@@ -109,6 +114,7 @@ public class ProblemCreator : MonoBehaviour {
         {
             GameObject toolClone = Instantiate(toolList[i].gameObject, toolSpawnPos[i].position, Quaternion.identity);
             toolClone.name = toolList[i].gameObject.name;
+            SetupSolutionObject(toolClone.GetComponent<AnswerObject>(), toolSpawnPos[i].position);
         }
     }
 

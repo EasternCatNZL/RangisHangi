@@ -47,3 +47,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Pit
+    uniqueID: 3627363771
+    locked: 0
+  - name: Pit Items
+    uniqueID: 2819655059
+    locked: 0
+  - name: Food
+    uniqueID: 503696973
+    locked: 0
+  - name: Character
+    uniqueID: 2317961777
+    locked: 0

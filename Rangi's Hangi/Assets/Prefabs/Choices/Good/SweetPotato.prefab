@@ -67,7 +67,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 4, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114774090919199802
 MonoBehaviour:
@@ -92,7 +92,10 @@ MonoBehaviour:
     maoriName: "K\u016Bmara"
     sprite: {fileID: 21300000, guid: 7968e98c67f160f4087665dd6acffc49, type: 3}
   myTag: Answer
+  hangiTag: Hangi
+  moveBack: 1
   isAnswer: 0
   startPos: {x: 0, y: 0, z: 0}
   currentLink: {fileID: 0}
   problemGenerator: {fileID: 0}
+  hangi: {fileID: 0}

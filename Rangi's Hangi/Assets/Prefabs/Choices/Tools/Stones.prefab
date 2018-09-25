@@ -67,7 +67,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 4, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114040922737763614
 MonoBehaviour:
@@ -93,6 +93,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 60fc529fc8ac1ef448f41b8c2dcc1f72, type: 3}
   myTag: Answer
   hangiTag: Hangi
+  moveBack: 1
   isAnswer: 0
   startPos: {x: 0, y: 0, z: 0}
   currentLink: {fileID: 0}

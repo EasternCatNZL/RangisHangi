@@ -57,12 +57,21 @@ public class AnswerObject : TouchMovable {
 
     public void SetSprite()
     {
+        if (textMesh)
+        {
+            Destroy(textMesh);
+            Destroy(gameObject.GetComponent<MeshRenderer>());
+        }
         spriteRend = gameObject.AddComponent<SpriteRenderer>();
         spriteRend.sprite = details.sprite;
     }
 
     public void SetTextMesh()
     {
+        if (spriteRend)
+        {
+            Destroy(spriteRend);
+        }
         textMesh = gameObject.AddComponent<TextMesh>();
         textMesh.text = details.maoriName;
         textMesh.characterSize = 0.5f;
@@ -163,7 +172,7 @@ public class AnswerObject : TouchMovable {
         if (collision.gameObject.GetComponent<AnswerObject>())
         {
             currentLink = collision.gameObject.GetComponent<AnswerObject>();
-            Debug.Log("Bruh");
+            //Debug.Log("Bruh");
         }
         else if (collision.gameObject.GetComponent<Hangi>())
         {

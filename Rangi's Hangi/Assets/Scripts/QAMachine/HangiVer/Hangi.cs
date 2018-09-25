@@ -39,6 +39,10 @@ public class Hangi : MonoBehaviour {
     public Contents cover;
     public Contents[] foodContents = new Contents[0];
 
+    [Header("Pit positioning")]
+    public GameObject pitObject;
+    public Transform[] objectPos = new Transform[6];
+
     [Header("UI Text instructions")]
     public TextMessage stackWoodMessage;
     public TextMessage addStoneMessage;
@@ -210,6 +214,12 @@ public class Hangi : MonoBehaviour {
         food4Wanted.sprite = foodContents[3].itemWanted.details.sprite;
         food4Given.sprite = foodContents[3].itemGiven.details.sprite;
 
+        coverWanted.sprite = cover.itemWanted.details.sprite;
+        coverGiven.sprite = cover.itemGiven.details.sprite;
+    }
 
+    void CreateInPit(Contents thing, int index)
+    {
+        GameObject pitObjectClone = Instantiate(pitObject, objectPos[index].position, Quaternion.identity);
     }
 }

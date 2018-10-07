@@ -144,6 +144,10 @@ public class cutHole : MonoBehaviour {
 				int v1 = findVertex(shared1);
 				int v2 = findVertex(shared2);
 
+                //deletes the hit tri
+                //deleteTri(hitTri);
+
+                //deletes square that shares same hypotenuse
 				deleteSquare(hitTri,findTriangle(vertices[v1], vertices[v2], hitTri));
 			}
 		}

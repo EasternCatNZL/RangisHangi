@@ -41,7 +41,7 @@ public class AnswerObject : TouchMovable {
 	
 	// Update is called once per frame
 	void Update () {
-        //TouchInputHandling(GetComponent<Collider2D>());
+        TouchInputHandling(GetComponent<Collider>());
         MouseInputHandling(GetComponent<Collider>());
 	}
 
@@ -134,7 +134,7 @@ public class AnswerObject : TouchMovable {
         {
             hangi.CollectItem(this);
         }
-        else
+        else if(problemGenerator)
         {
             problemGenerator.ProcessProblem();            
         }

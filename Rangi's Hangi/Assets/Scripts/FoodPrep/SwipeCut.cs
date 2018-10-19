@@ -12,12 +12,18 @@ public class SwipeCut : MonoBehaviour {
         Right
     }
 
+    [Header("Swipe vars")]
     public float alpha = 1;
     public float alphaDecayRate = 0.1f;
     public float requiredSwipeDistance = 1.0f;
     public float timeToSelfDestroy = 0.5f;
     public SwipeDirection swipeDir = SwipeDirection.Down;
 
+    [Header("Script refs")]
+    public GameScreenHandler gameHandler;
+    public FoodStateCheck foodState;
+
+    //control vars
     bool isTracking = false;
     bool isPeeling = false;
     float moveStartTime = 0.0f;
@@ -41,6 +47,7 @@ public class SwipeCut : MonoBehaviour {
         {
             if(Time.time > moveStartTime + timeToSelfDestroy)
             {
+                foodState.RemovePiece(this);
                 Destroy(gameObject);
             }
             else
@@ -79,8 +86,7 @@ public class SwipeCut : MonoBehaviour {
                     break;
                 case TouchPhase.Ended:
                     if (isTracking)                        
-                    {
-                        
+                    {                        
                         isTracking = false;
                         //get end location screen to world for compare
                         endPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -148,8 +154,12 @@ public class SwipeCut : MonoBehaviour {
 
     void CheckInput()
     {
-        MouseSwipe();
-        TouchSwipe();
+        //check game is allowing inputs
+        if (gameHandler.state == GameScreenHandler.currentState.DialougeClosed)
+        {
+            MouseSwipe();
+            TouchSwipe();
+        }       
     }
 
     bool CheckSwipe()

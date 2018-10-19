@@ -33,8 +33,11 @@ public class TouchMovable : MonoBehaviour {
                         RaycastHit rayHit;
                         if (Physics.Raycast(ray, out rayHit))
                         {
-                            if (!isFollowing && isMovable)
-                            isFollowing = true;
+                            if (rayHit.collider == collider)
+                            {
+                                if (!isFollowing && isMovable)
+                                    isFollowing = true;
+                            }
                         }
                         break;
                     case TouchPhase.Moved:
